@@ -63,7 +63,7 @@ public class MultithreadingModule extends ReactContextBaseJavaModule {
     try {
       SoLoader.loadLibrary("jscexecutor");
       return new JSCExecutorFactory("Multithreading", "Multithreading");
-    } catch (UnsatisfiedLinkError jscE) {
+    } catch (UnsatisfiedLinkError | ClassNotFoundException jscE) {
       // https://github.com/facebook/hermes/issues/78 shows that
       // people who aren't trying to use Hermes are having issues.
       // https://github.com/facebook/react-native/issues/25923#issuecomment-554295179
@@ -80,7 +80,7 @@ public class MultithreadingModule extends ReactContextBaseJavaModule {
       // Otherwise use Hermes
       try {
         return new HermesExecutorFactory();
-      } catch (UnsatisfiedLinkError hermesE) {
+      } catch (UnsatisfiedLinkError | ClassNotFoundException hermesE) {
         // If we get here, either this is a JSC build, and of course
         // Hermes failed (since it's not in the APK), or it's a Hermes
         // build, and Hermes had a problem.
